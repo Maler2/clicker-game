@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://csikt7i4hjlk4"]
+
+[ext_resource type="Script" uid="uid://hsvnkclj7cng" path="res://script/control.gd" id="1_qtu10"]
+[ext_resource type="AudioStream" uid="uid://jeoelampjubx" path="res://sound/sfx/remove.wav" id="2_62e2m"]
+
+[node name="Control" type="Control" unique_id=391224982]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_qtu10")
+
+[node name="scorelabel" type="Label" parent="." unique_id=1989193507]
+layout_mode = 0
+offset_top = -5.0
+offset_right = 59.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 20
+text = "scorelabel"
+uppercase = true
+
+[node name="Button" type="Button" parent="." unique_id=117032661]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 216.0
+offset_right = 824.0
+offset_bottom = 432.0
+theme_override_font_sizes/font_size = 150
+text = "button"
+
+[node name="audioplayer" type="AudioStreamPlayer" parent="." unique_id=304090316]
+max_polyphony = 8
+
+[node name="remove_button" type="Button" parent="." unique_id=997478065]
+layout_mode = 0
+offset_left = 664.0
+offset_top = 440.0
+offset_right = 824.0
+offset_bottom = 536.0
+theme_override_font_sizes/font_size = 20
+text = "Remove"
+
+[node name="removesfx" type="AudioStreamPlayer" parent="." unique_id=1549935357]
+stream = ExtResource("2_62e2m")
+volume_db = -15.0
+
+[node name="Timer" type="Timer" parent="." unique_id=1984826925]
+autostart = true
+
+[node name="upgrade1" type="Label" parent="." unique_id=389106135]
+layout_mode = 0
+offset_top = 23.0
+offset_right = 59.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 20
+text = "upgrade1label"
+uppercase = true
+
+[node name="speed_timer" type="Button" parent="." unique_id=1196228031]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 440.0
+offset_right = 488.0
+offset_bottom = 536.0
+theme_override_font_sizes/font_size = 20
+text = "Speed"
+
+[node name="speedlabel" type="Label" parent="." unique_id=1505428658]
+layout_mode = 0
+offset_top = 52.0
+offset_right = 59.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 20
+text = "speedlabel"
+uppercase = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=705428191]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 320.0
+offset_bottom = 192.0
+theme_override_font_sizes/normal_font_size = 20
+text = "RICHLABEL"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="infolabel" type="PanelContainer" parent="." unique_id=1463266847]
+layout_mode = 0
+offset_left = 511.0
+offset_top = 648.0
+offset_right = 640.0
+offset_bottom = 704.0
+
+[node name="Label" type="Label" parent="infolabel" unique_id=1097998452]
+layout_mode = 2
+text = "infolabel"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+uppercase = true
+
+[node name="pausebutton" type="Button" parent="." unique_id=345262416]
+layout_mode = 0
+offset_left = 1088.0
+offset_right = 1152.0
+offset_bottom = 64.0
+text = "exit"
+
+[node name="rebirth_button" type="Button" parent="." unique_id=1852457958]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 440.0
+offset_right = 656.0
+offset_bottom = 536.0
+text = "Rebirth"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="remove_button" to="." method="_on_remove_button_pressed"]
+[connection signal="pressed" from="speed_timer" to="." method="_on_speed_timer_pressed"]
+[connection signal="pressed" from="pausebutton" to="." method="_on_pausebutton_pressed"]
+[connection signal="pressed" from="rebirth_button" to="." method="_on_rebirth_button_pressed"]

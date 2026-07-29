@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cbl44gtpo3ael"]
+
+[ext_resource type="Script" uid="uid://clckpys1b6cr8" path="res://script/menu.gd" id="1_yqeox"]
+
+[node name="Menu" type="Control" unique_id=2011670748]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yqeox")
+
+[node name="ResumeButton" type="Button" parent="." unique_id=2143306762]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 192.0
+offset_right = 736.0
+offset_bottom = 288.0
+theme_override_font_sizes/font_size = 60
+keep_pressed_outside = true
+text = "resume"
+
+[node name="OptionButton" type="Button" parent="." unique_id=1364937535]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 296.0
+offset_right = 736.0
+offset_bottom = 392.0
+theme_override_font_sizes/font_size = 60
+keep_pressed_outside = true
+text = "options"
+
+[node name="ExitButton" type="Button" parent="." unique_id=1352165009]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 400.0
+offset_right = 736.0
+offset_bottom = 496.0
+theme_override_font_sizes/font_size = 60
+text = "exit"
+
+[connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
