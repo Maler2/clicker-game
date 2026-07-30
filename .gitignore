@@ -1,6 +1,7 @@
 # Godot 4 / Godot 3 ignore list
 .godot/
 .import/
+.vscode/
 export_presets.cfg
 *.tmp
 *.translation
