@@ -1,0 +1,164 @@
+[gd_scene format=3 uid="uid://csikt7i4hjlk4"]
+
+[ext_resource type="Script" uid="uid://hsvnkclj7cng" path="res://script/control.gd" id="1_qtu10"]
+[ext_resource type="AudioStream" uid="uid://jeoelampjubx" path="res://sound/sfx/remove.wav" id="2_62e2m"]
+[ext_resource type="Texture2D" uid="uid://bnwo5767yq64" path="res://images/score.png" id="3_brbbq"]
+
+[node name="Control" type="Control" unique_id=391224982]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_qtu10")
+
+[node name="scorelabel" type="Label" parent="." unique_id=1989193507]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 128.0
+offset_bottom = 32.0
+theme_override_font_sizes/font_size = 20
+text = "num"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Button" type="Button" parent="." unique_id=117032661]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28500003
+anchor_top = 0.333
+anchor_right = 0.72200006
+anchor_bottom = 0.66700006
+offset_left = -0.32003784
+offset_top = 0.21600342
+offset_right = 0.2559204
+offset_bottom = -0.21603394
+theme_override_font_sizes/font_size = 150
+text = "button"
+
+[node name="audioplayer" type="AudioStreamPlayer" parent="." unique_id=304090316]
+max_polyphony = 8
+
+[node name="remove_button" type="Button" parent="." unique_id=997478065]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.583
+anchor_top = 0.679
+anchor_right = 0.72200006
+anchor_bottom = 0.827
+offset_left = 0.38397217
+offset_top = 0.0079956055
+offset_right = 0.2559204
+offset_bottom = 0.104003906
+theme_override_font_sizes/font_size = 20
+text = "Remove"
+
+[node name="removesfx" type="AudioStreamPlayer" parent="." unique_id=1549935357]
+stream = ExtResource("2_62e2m")
+volume_db = -15.0
+
+[node name="Timer" type="Timer" parent="." unique_id=1984826925]
+autostart = true
+
+[node name="upgrade1" type="Label" parent="." unique_id=389106135]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 165.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 20
+text = "upgrade1label"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="speed_timer" type="Button" parent="." unique_id=1196228031]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28500003
+anchor_top = 0.679
+anchor_right = 0.43100002
+anchor_bottom = 0.827
+offset_left = -0.32003784
+offset_top = 0.0079956055
+offset_right = -0.5120239
+offset_bottom = 0.104003906
+theme_override_font_sizes/font_size = 20
+text = "Speed"
+
+[node name="speedlabel" type="Label" parent="." unique_id=1505428658]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 120.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 20
+text = "speedlabel"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=705428191]
+layout_mode = 0
+offset_top = 96.0
+offset_right = 320.0
+offset_bottom = 208.0
+theme_override_font_sizes/normal_font_size = 20
+text = "RICHLABEL"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="infolabel" type="PanelContainer" parent="." unique_id=1463266847]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.44400004
+anchor_top = 1.0
+anchor_right = 0.55600005
+anchor_bottom = 1.0860001
+offset_left = -0.4880371
+offset_right = -0.51208496
+offset_bottom = 0.27197266
+
+[node name="Label" type="Label" parent="infolabel" unique_id=1097998452]
+layout_mode = 2
+text = "infolabel"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+uppercase = true
+
+[node name="pausebutton" type="Button" parent="." unique_id=345262416]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.94400007
+anchor_right = 1.0
+anchor_bottom = 0.09900001
+offset_left = 0.5119629
+offset_bottom = -0.15200806
+grow_horizontal = 0
+text = "Pause"
+
+[node name="rebirth_button" type="Button" parent="." unique_id=1852457958]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.437
+anchor_top = 0.679
+anchor_right = 0.57600003
+anchor_bottom = 0.827
+offset_left = 0.57598877
+offset_top = 0.0079956055
+offset_right = 0.447937
+offset_bottom = 0.104003906
+text = "Rebirth"
+
+[node name="Score" type="Sprite2D" parent="." unique_id=77336482]
+position = Vector2(16, 16)
+scale = Vector2(2, 2)
+texture = ExtResource("3_brbbq")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="remove_button" to="." method="_on_remove_button_pressed"]
+[connection signal="pressed" from="speed_timer" to="." method="_on_speed_timer_pressed"]
+[connection signal="pressed" from="pausebutton" to="." method="_on_pausebutton_pressed"]
+[connection signal="pressed" from="rebirth_button" to="." method="_on_rebirth_button_pressed"]
