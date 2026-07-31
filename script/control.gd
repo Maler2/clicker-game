@@ -11,10 +11,12 @@ const PAUSE_MENU_SCENE = preload("res://scenes/menu.tscn")
 @onready var upgrade_button = $remove_button
 @onready var speed_button = $speed_timer
 @onready var rebirth_button = $rebirth_button
+@onready var pause_button = $pausebutton
 @onready var sfx = $audioplayer
 @onready var auto_timer = $Timer
 
 var min_auto_timer: float = 0.1
+var menu_instance = null
 
 var sfx_list: Dictionary = {
 	"add": preload("res://sound/sfx/add.wav"),
@@ -22,7 +24,14 @@ var sfx_list: Dictionary = {
 }
 
 func _ready():
-	print("Os Sekarang: ", OS.get_name())
+	# process_mode = Node.PROCESS_MODE_ALWAYS
+	var current_os = OS.get_name()
+	if current_os in ["Windows", "Linux", "macOS", "Web"]:
+		pause_button.hide()
+	else:
+		pause_button.show()
+
+
 	Global.load_game()
 	auto_timer.wait_time = Global.auto_timer_wait_time
 	auto_timer.timeout.connect(add_score_auto)
@@ -34,6 +43,15 @@ func _ready():
 		infolabel.hide()
 		
 	print("start up")
+
+func _unhandled_input(event):
+	# Khusus PC/Komputer: Cek kalau OS-nya Windows/Linux/macOS/Web
+	if OS.get_name() in ["Windows", "Linux", "macOS", "Web"]:
+		# Cek kalau pemain menekan tombol keyboard/action di Input Map (misal: "toggle_pause" atau "ui_cancel")
+		if event.is_action_pressed("ui_cancel"):
+			# Cek biar gak buka menu pause berlapis-lapis kalau game udah paused
+			if not get_tree().paused:
+				open_pause_menu()
 
 func update_score_ui():
 	button.text = "+" + str(snapped(Global.add_score * Global.rebirth_mult, 0.1))
