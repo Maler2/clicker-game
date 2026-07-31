@@ -22,6 +22,7 @@ var sfx_list: Dictionary = {
 }
 
 func _ready():
+	print("Os Sekarang: ", OS.get_name())
 	Global.load_game()
 	auto_timer.wait_time = Global.auto_timer_wait_time
 	auto_timer.timeout.connect(add_score_auto)
