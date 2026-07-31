@@ -56,7 +56,7 @@ offset_bottom = -0.32000732
 theme_override_font_sizes/font_size = 60
 text = "exit"
 
-[node name="ClearButton" type="Button" parent="." unique_id=1498713797]
+[node name="OptionButton" type="Button" parent="." unique_id=1498713797]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.36100003
@@ -68,9 +68,9 @@ offset_top = -0.088012695
 offset_right = -0.12805176
 offset_bottom = 0.0079956055
 theme_override_font_sizes/font_size = 60
-text = "clear"
+text = "options"
 
 [connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="pressed" from="OptionButton" to="." method="_on_option_button_pressed"]

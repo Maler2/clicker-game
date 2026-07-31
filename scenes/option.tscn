@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://bcnyn0u0twhsw"]
+
+[ext_resource type="Script" uid="uid://kldba0aasl" path="res://script/option.gd" id="1_kjajs"]
+
+[node name="Option" type="Control" unique_id=1733546384]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kjajs")
+
+[node name="BackButton" type="Button" parent="." unique_id=382046316]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36100003
+anchor_top = 0.21000001
+anchor_right = 0.63900006
+anchor_bottom = 0.358
+offset_left = 0.1279602
+offset_top = -0.08000183
+offset_right = -0.12805176
+offset_bottom = 0.015991211
+theme_override_font_sizes/font_size = 60
+keep_pressed_outside = true
+text = "back"
+
+[node name="VolumeButton" type="Button" parent="." unique_id=1284658003]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36100003
+anchor_top = 0.37
+anchor_right = 0.63900006
+anchor_bottom = 0.51900005
+offset_left = 0.1279602
+offset_top = 0.23999023
+offset_right = -0.12805176
+offset_bottom = -0.31204224
+theme_override_font_sizes/font_size = 60
+keep_pressed_outside = true
+text = "volume"
+
+[node name="OtherButton" type="Button" parent="." unique_id=1610535515]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36100003
+anchor_top = 0.531
+anchor_right = 0.63900006
+anchor_bottom = 0.679
+offset_left = 0.1279602
+offset_top = -0.088012695
+offset_right = -0.12805176
+offset_bottom = 0.0079956055
+theme_override_font_sizes/font_size = 60
+keep_pressed_outside = true
+text = "other"
+
+[node name="ClearButton" type="Button" parent="." unique_id=887370140]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36100003
+anchor_top = 0.69100004
+anchor_right = 0.63900006
+anchor_bottom = 0.84000003
+offset_left = 0.1279602
+offset_top = 0.23196411
+offset_right = -0.12805176
+offset_bottom = -0.32000732
+theme_override_font_sizes/font_size = 60
+keep_pressed_outside = true
+text = "clear"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="VolumeButton" to="." method="_on_volume_button_pressed"]
+[connection signal="pressed" from="OtherButton" to="." method="_on_other_button_pressed"]
+[connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]

@@ -1,29 +1,94 @@
 extends Node
 
-# --- VARIABEL SAVE & LOAD (Tetap sama) ---
+# --- VARIABEL SAVE & LOAD ---
 var score: float = 0.0
 var add_score: float = 1.0
 var target_score: float = 10.0
+var target_score_count: int = 0
 var passive_income: float = 0.0
-var auto_timer_cost: float = 200.0
+var auto_timer_cost: float = 50.0
+var speed_count: int = 0
 var auto_timer_wait_time: float = 1.0
 
 var rebirth_cost: float = 1000.0
 var rebirth_count: int = 0
+var last_rebirth_count: int = 0
 var rebirth_mult: float = 1.0
 
 const SAVE_PATH = "user://savegame.json"
+
+func fmt(val: float, step: float = 0.1) -> String:
+	return str(snapped(val, step))
+
+func update_score_ui(ui: Dictionary, auto_timer: Timer, min_auto_timer: float) -> void:
+	ui.button.text = "+" + fmt(add_score * rebirth_mult)
+	ui.upgrade_button.text = "Buy: " + fmt(target_score) + " (" + str(target_score_count) + ")"
+	
+	if auto_timer.wait_time <= min_auto_timer:
+		ui.speed_button.text = "Speed: MAX"
+	else:
+		ui.speed_button.text = "Speed: " + fmt(auto_timer_cost) + " (" + str(speed_count) + ")"
+		
+	ui.rebirth_button.text = "Rebirth: " + fmt(rebirth_cost, 1.0) + " (" + str(last_rebirth_count) + ")"
+	
+	ui.textlabel.text = ": " + fmt(score, 1.0)
+	ui.textlabel2.text = "Upgrade 1: " + fmt(target_score)
+	ui.textlabel3.text = "Upgrade 2: " + fmt(auto_timer_cost) + " " + fmt(auto_timer.wait_time) + "s"
+	ui.richlabel.text = "click per score %.1f passive %.1f\nSpeed %.1fs\nRebirth %.1f" % [
+		add_score, 
+		passive_income, 
+		auto_timer.wait_time, 
+		rebirth_mult
+	]
+
+# --- FUNGSI REBIRTH (Hanya Reset Progress Skor & Speed) ---
+func do_rebirth():
+	rebirth_count += 1
+	last_rebirth_count += 1
+	rebirth_mult += 0.5
+	rebirth_cost *= 1.5 # Harga rebirth NAIK dan TIDAK DI-RESET!
+	
+	# Reset progress biasa
+	score = 0.0
+	add_score = 1.0
+	target_score = 10.0
+	target_score_count = 0
+	passive_income = 0.0
+	auto_timer_cost = 200.0
+	speed_count = 0
+	auto_timer_wait_time = 1.0
+	
+	save_game()
+
+# --- FUNGSI RESET TOTAL / CLEAR SAVE DATA ---
+func reset_progress():
+	score = 0.0
+	add_score = 1.0
+	target_score = 10.0
+	target_score_count = 0
+	passive_income = 0.0
+	auto_timer_cost = 200.0
+	speed_count = 0
+	auto_timer_wait_time = 1.0
+	rebirth_count = 0
+	last_rebirth_count = 0
+	rebirth_cost = 1000.0
+	rebirth_mult = 1.0
+	save_game()
 
 func save_game():
 	var save_data = {
 		"score": score,
 		"add_score": add_score,
 		"target_score": target_score,
+		"target_score_count": target_score_count,
 		"passive_income": passive_income,
 		"auto_timer_cost": auto_timer_cost,
+		"speed_count": speed_count,
 		"auto_timer_wait_time": auto_timer_wait_time,
 		"rebirth_cost": rebirth_cost,
 		"rebirth_count": rebirth_count,
+		"last_rebirth_count": last_rebirth_count,
 		"rebirth_mult": rebirth_mult
 	}
 	
@@ -49,33 +114,20 @@ func load_game():
 			score = data.get("score", 0.0)
 			add_score = data.get("add_score", 1.0)
 			target_score = data.get("target_score", 10.0)
+			target_score_count = data.get("target_score_count", 0)
 			passive_income = data.get("passive_income", 0.0)
 			auto_timer_cost = data.get("auto_timer_cost", 200.0)
+			speed_count = data.get("speed_count", 0)
 			auto_timer_wait_time = data.get("auto_timer_wait_time", 1.0)
 			rebirth_cost = data.get("rebirth_cost", 1000.0)
 			rebirth_count = data.get("rebirth_count", 0)
+			last_rebirth_count = data.get("last_rebirth_count", 0)
 			rebirth_mult = data.get("rebirth_mult", 1.0)
 
-func reset_progress():
-	score = 0.0
-	add_score = 1.0
-	target_score = 10.0
-	passive_income = 0.0
-	auto_timer_cost = 200.0
-	auto_timer_wait_time = 1.0
-	save_game()
+# (Popup function di bawahnya biarkan tetap sama)
 
 # ==========================================
 # --- FUNGSI POPUP GLOBAL ---
-# ==========================================
-# ==========================================
-# --- FUNGSI POPUP GLOBAL ---
-# ==========================================
-# ==========================================
-# --- FUNGSI POPUP GLOBAL ---
-# ==========================================
-# ==========================================
-# --- FUNGSI POPUP GLOBAL FLEKSIBEL ---
 # ==========================================
 func popup(custom_text: String = "", arg2: Variant = null, arg3: float = 0.6):
 	var current_scene = get_tree().current_scene

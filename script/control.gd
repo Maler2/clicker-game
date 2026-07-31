@@ -2,15 +2,19 @@ extends Control
 
 const PAUSE_MENU_SCENE = preload("res://scenes/menu.tscn")
 
-@onready var textlabel = $scorelabel
-@onready var textlabel2 = $upgrade1
-@onready var textlabel3 = $speedlabel
-@onready var richlabel = $RichTextLabel
+# Dibungkus ke Dictionary biar rapi & pas dipanggil ke Global tinggal kirim 1 variabel!
+@onready var ui: Dictionary = {
+	"textlabel": $scorelabel,
+	"textlabel2": $upgrade1,
+	"textlabel3": $speedlabel,
+	"richlabel": $RichTextLabel,
+	"button": $Button,
+	"upgrade_button": $remove_button,
+	"speed_button": $speed_timer,
+	"rebirth_button": $rebirth_button
+}
+
 @onready var infolabel = $infolabel
-@onready var button = $Button
-@onready var upgrade_button = $remove_button
-@onready var speed_button = $speed_timer
-@onready var rebirth_button = $rebirth_button
 @onready var pause_button = $pausebutton
 @onready var sfx = $audioplayer
 @onready var auto_timer = $Timer
@@ -24,13 +28,11 @@ var sfx_list: Dictionary = {
 }
 
 func _ready():
-	# process_mode = Node.PROCESS_MODE_ALWAYS
 	var current_os = OS.get_name()
 	if current_os in ["Windows", "Linux", "macOS", "Web"]:
 		pause_button.hide()
 	else:
 		pause_button.show()
-
 
 	Global.load_game()
 	auto_timer.wait_time = Global.auto_timer_wait_time
@@ -45,27 +47,14 @@ func _ready():
 	print("start up")
 
 func _unhandled_input(event):
-	# Khusus PC/Komputer: Cek kalau OS-nya Windows/Linux/macOS/Web
 	if OS.get_name() in ["Windows", "Linux", "macOS", "Web"]:
-		# Cek kalau pemain menekan tombol keyboard/action di Input Map (misal: "toggle_pause" atau "ui_cancel")
 		if event.is_action_pressed("ui_cancel"):
-			# Cek biar gak buka menu pause berlapis-lapis kalau game udah paused
 			if not get_tree().paused:
 				open_pause_menu()
 
+# Panggilan ke Global jadi super ringkas!
 func update_score_ui():
-	button.text = "+" + str(snapped(Global.add_score * Global.rebirth_mult, 0.1))
-	upgrade_button.text = "Buy: " + str(snapped(Global.target_score, 0.1))
-	speed_button.text = "Speed: " + str(snapped(Global.auto_timer_cost, 0.1))
-	rebirth_button.text = "Rebirth: " + str(snapped(Global.rebirth_cost, 1))
-	
-	if auto_timer.wait_time <= min_auto_timer:
-		speed_button.text = "Speed: MAX"
-	
-	textlabel.text = ": " + str(snapped(Global.score, 1))
-	textlabel2.text = "Upgrade 1: " + str(snapped(Global.target_score, 0.1))
-	textlabel3.text = "Upgrade 2: " + str(snapped(Global.auto_timer_cost, 0.1)) + " " + str(snapped(auto_timer.wait_time, 0.1)) + "s"
-	richlabel.text = "click per score %.1f passive %.1f\nSpeed %.1fs\nRebirth %.1f" % [Global.add_score, Global.passive_income, auto_timer.wait_time, Global.rebirth_mult]
+	Global.update_score_ui(ui, auto_timer, min_auto_timer)
 
 func add_score_auto():
 	if Global.passive_income > 0:
@@ -89,6 +78,7 @@ func _on_remove_button_pressed() -> void:
 		Global.score -= remove_cost
 		Global.passive_income += 1
 		Global.add_score += 1
+		Global.target_score_count += 1
 		update_score_ui()
 		Global.popup("Upgraded!", infolabel)
 	else:
@@ -103,10 +93,11 @@ func _on_speed_timer_pressed() -> void:
 			Global.auto_timer_wait_time = auto_timer.wait_time
 			auto_timer.start()
 			Global.auto_timer_cost *= 1.5
+			Global.speed_count += 1
 			update_score_ui()
 			Global.popup("Speed Upgraded!", infolabel)
 		else:
-			speed_button.text = "Speed: MAX"
+			ui.speed_button.text = "Speed: MAX"
 			Global.popup("Speed Max!", infolabel)
 	else:
 		Global.popup("Not Enough Point!", infolabel)
@@ -114,11 +105,11 @@ func _on_speed_timer_pressed() -> void:
 func _on_rebirth_button_pressed() -> void:
 	if Global.score >= Global.rebirth_cost:
 		Global.popup("Rebirth Success!", infolabel)
-		Global.rebirth_count += 1
-		Global.rebirth_mult += 0.5
-		Global.rebirth_cost *= 2.5
 		
-		Global.reset_progress()
+		# Panggil fungsi khusus rebirth dari Global
+		Global.do_rebirth()
+		
+		# Reset timer ke default
 		auto_timer.wait_time = Global.auto_timer_wait_time
 		auto_timer.start()
 		
