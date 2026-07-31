@@ -1,7 +1,48 @@
-# Godot 4 / Godot 3 ignore list
+# ==========================================
+# GODOT ENGINE IGNORES
+# ==========================================
+# Cache internal dan file impor sementara
 .godot/
 .import/
-.vscode/
-export_presets.cfg
-*.tmp
+.nomedia
+
+# Pengaturan export dan kredensial sensitif
+export.cfg
+export_credentials.cfg
+
+# File terjemahan otomatis dan temporary
 *.translation
+*.tmp
+
+# Godot versi Mono / C#
+.mono/
+data_*/
+mono_crash.*.json
+
+# ==========================================
+# IDE & TEXT EDITOR IGNORES
+# ==========================================
+# Pengaturan lokal VS Code
+.vscode/
+
+# Editor lainnya (JetBrains, Android Studio, dll)
+.idea/
+*.swp
+*.swo
+
+# ==========================================
+# COMPILER, BUILD OUTPUT & EXECUTABLES
+# ==========================================
+# File hasil compile / executable
+*.exe
+*.out
+*.app
+*.apk
+*.aab
+
+# Folder output build (C/C++, Rust, dll)
+bin/
+build/
+dist/
+*.o
+*.obj
